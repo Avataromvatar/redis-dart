@@ -31,14 +31,15 @@ class RedisSerialise {
   static final _dollarminus1 = ASCII.encode("\$-1");
       
   static List<int> Serialise(object){
-     List<int> s = new List();
+     List<int> s = new List.empty(growable: true);
      SerialiseConsumable(object,(v){
        s.addAll(v);
+      //  return null;
      });
      return s;
   }
   
-  static void SerialiseConsumable(object,Function consumer(Iterable s)){
+  static void SerialiseConsumable(object,void consumer(Iterable<int> s)){
      if(object is String){
        var data = UTF8.encode(object);
        consumer(_dollar);

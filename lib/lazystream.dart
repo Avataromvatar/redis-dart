@@ -17,13 +17,14 @@ part of redis;
 
 // like Stream but has method next for simple reading
 class StreamNext<T>  {
-  StreamSubscription<T> _ss;
+  late StreamSubscription<T> _ss;
   Queue<Completer<T>> _queue;
-  int _nfut;
-  int _npack;
-  bool done;
-  StreamNext.fromstream(Stream<T> stream){
-    _queue = new Queue<Completer<T>>();
+  int _nfut =0;
+  int _npack=0;
+  bool done=false;
+  StreamNext.fromstream(Stream<T> stream): _queue = new Queue<Completer<T>>()
+  {
+    // _queue = new Queue<Completer<T>>();
     _nfut = 0;
     _npack = 0;
     done = false;
@@ -82,13 +83,15 @@ class LazyStream {
   StreamNext<List<int>> _stream;
   List<int> _remainder;
   List<int> _return;
-  int _start_index;
-  Iterator<int> _iter;
-  LazyStream.fromstream(Stream<List<int>> stream){
-    _stream = new StreamNext<List<int>>.fromstream(stream);
-    _start_index = 0;
-    _return = new List<int>();
-    _remainder = new List<int>();
+  int _start_index=0;
+  late Iterator<int> _iter;
+  LazyStream.fromstream(Stream<List<int>> stream):_stream = new StreamNext<List<int>>.fromstream(stream),
+  _return = new List<int>.empty(growable: true),_remainder = new List<int>.empty(growable: true)
+  {
+    // _stream = new StreamNext<List<int>>.fromstream(stream);
+    // _start_index = 0;
+    // _return = new List<int>.empty(growable: true);
+    // _remainder = new List<int>.empty(growable: true);
     _iter = _remainder.iterator;
   }
   
@@ -97,7 +100,7 @@ class LazyStream {
   }
 
   Future<List<int>> take_n(int n) {
-    _return = new List<int>();
+    _return = new List<int>.empty(growable: true);
     return __take_n(n);
   }
   
@@ -126,7 +129,7 @@ class LazyStream {
 
 
   Future<List<int>> take_while(bool Function(int) pred) {
-    _return = new List<int>();
+    _return = new List<int>.empty(growable: true);
     return __take_while(pred);
   }
   

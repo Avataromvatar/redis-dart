@@ -12,7 +12,7 @@ part of redis;
 
 class Cas{
   Command _cmd;
-  Completer<bool> _completer_bool;
+  late Completer<bool> _completer_bool;
   
   /// Class for  CAS  check-and-set pattern  
   /// Construct with Command and call  

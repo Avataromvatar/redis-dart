@@ -12,8 +12,8 @@ part of redis;
 
 /// Class for server connection on server
 class RedisConnection {
-  Socket _socket = null;
-  LazyStream _stream = null;
+  late Socket _socket;// = null;
+  late LazyStream _stream;// = null;
   Future _future = new Future.value();
   RedisParser parser = new RedisParser();
 
@@ -70,7 +70,7 @@ class RedisConnection {
     return _future;
   }
 
-  Future _sendraw(List data) {
+  Future _sendraw(List<int> data) {
     _socket.add(data);
     return _senddummy();
   }

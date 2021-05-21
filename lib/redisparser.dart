@@ -103,7 +103,7 @@ class RedisParser{
   
   //it first consume array as N and then
   //consume  N elements with parseredisresponse function
-  static Future<List> parseArray(LazyStream s){
+  static Future<List?> parseArray(LazyStream s){
     //closure
     Future<List> consumeList(LazyStream s,int len,List lst){
       assert(len>=0);
@@ -120,7 +120,7 @@ class RedisParser{
       if(i==-1) //null
         return null; 
       if(i>=0){ //i of array data
-          List a = new List();
+          List a = new List.empty(growable: true);
           return consumeList(s,i,a);
       }
       else{
@@ -133,7 +133,7 @@ class RedisParser{
   //maualy parse int from raw data (faster)
   static int _ParseIntRaw(Iterable<int> arr){
       int sign = 1;
-      var v = arr.fold(0,(a,b){
+      var v = arr.fold<int>(0,(a,b){
         if(b == 45){
           if(a != 0)
             throw RedisRuntimeError("cannot parse int");

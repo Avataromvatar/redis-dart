@@ -8,10 +8,11 @@ class _WarrningPubSubInProgress {
 class PubSub{
   Command _command;
   StreamController<List> _stream_controler = new StreamController<List>();
-  Future _forever;
+  late Future _forever;
   
-  PubSub(Command command){
-    _command=new  Command(command._connection);
+  PubSub(Command command):_command=new  Command(command._connection)
+  {
+    // _command=new  Command(command._connection);
     _forever = command.send_nothing().then((_){
       //override socket with warrning
       command._connection = new _WarrningPubSubInProgress(); 
