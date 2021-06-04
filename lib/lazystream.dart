@@ -100,12 +100,15 @@ class LazyStream {
   }
 
   Future<List<int>> take_n(int n) {
+    print('take_n $n');
     _return = new List<int>.empty(growable: true);
     return __take_n(n);
+
   }
   
   Future<List<int>> __take_n(int n) {
     int rest = _take_n_helper(n);
+
     if (rest == 0){
         return new Future<List<int>>.value(_return);
     }
@@ -113,9 +116,11 @@ class LazyStream {
       return _stream.next().then<List<int>>((List<int> pack){
         _remainder = pack;
         _iter = _remainder.iterator;
+        print('take_n END $n');
         return __take_n(rest);
       });
     }
+       
   }
 
   // return remining n

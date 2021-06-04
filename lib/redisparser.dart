@@ -105,6 +105,7 @@ class RedisParser{
   //consume  N elements with parseredisresponse function
   static Future<List?> parseArray(LazyStream s){
     //closure
+    print('parseArray $s');
     Future<List> consumeList(LazyStream s,int len,List lst){
       assert(len>=0);
       if(len==0){
