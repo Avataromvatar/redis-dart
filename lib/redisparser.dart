@@ -103,7 +103,7 @@ class RedisParser{
   
   //it first consume array as N and then
   //consume  N elements with parseredisresponse function
-  static Future<List?> parseArray(LazyStream s){
+  static Future<List> parseArray(LazyStream s){
     //closure
     print('parseArray $s');
     Future<List> consumeList(LazyStream s,int len,List lst){
@@ -119,7 +119,8 @@ class RedisParser{
     //end of closure
     return parseInt(s).then((i){ //get len
       if(i==-1) //null
-        return null; 
+        // return null; 
+        return List.empty(); 
       if(i>=0){ //i of array data
           List a = new List.empty(growable: true);
           return consumeList(s,i,a);
