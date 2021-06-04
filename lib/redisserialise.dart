@@ -40,8 +40,6 @@ class RedisSerialise {
   }
   
   static void SerialiseConsumable(object,void consumer(Iterable<int> s)){
-    try {
-      
     
      if(object is String){
        var data = UTF8.encode(object);
@@ -75,9 +73,7 @@ class RedisSerialise {
      else{
        throw("cant serialise such type");
      }
-     } catch (e) {
-       print('SerialiseConsumable $object ERROR $e');
-    }
+    
   }
   
   static Iterable<int> _IntToRaw(int n){
