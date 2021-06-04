@@ -110,13 +110,14 @@ class LazyStream {
     int rest = _take_n_helper(n);
 
     if (rest == 0){
+        print('take_n END1 $n ret:$_return');
         return new Future<List<int>>.value(_return);
     }
     else {
       return _stream.next().then<List<int>>((List<int> pack){
         _remainder = pack;
         _iter = _remainder.iterator;
-        print('take_n END $n');
+        print('take_n END2 $n ret:$_return');
         return __take_n(rest);
       });
     }
